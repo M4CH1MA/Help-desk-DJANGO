@@ -5,4 +5,5 @@ app_name = 'helpdesk'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('<int:call_id>/', views.call, name='call'),
 ]
