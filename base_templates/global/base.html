@@ -1,22 +1,11 @@
-{%load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helpdesk</title>
-    <link rel="stylesheet" href=" {% static 'global/css/style.css'%} ">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/1ecede3596.js" crossorigin="anonymous"></script>
-  </head>
+  {%include 'global/partials/_head.html' %}
+</head>
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-          <img src="{% static 'global/image/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-          App Help Desk
-        </a>
-      </nav>
 
+  {%include 'global/partials/_nav.html' %}
 
       <div class="container">    
         <div class="row">
