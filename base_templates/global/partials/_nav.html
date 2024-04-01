@@ -20,9 +20,9 @@
         	
 
             <!-- Formulário -->
-        <form class="form-inline" method="get">
-            <input type="text" class="form-control" placeholder="pesquisar..." id="search" name="q">
-            <button class="btn btn-outline-success">ok</button>
+        <form class="form-inline" method="get" action="{% url 'helpdesk:search' %}">
+            <input type="text" class="form-control" placeholder="pesquisar..." id="search" name="q" value="{{search_value}}">
+            <button class="btn btn-outline-primary">ok</button>
         </form>
 
       </div>
