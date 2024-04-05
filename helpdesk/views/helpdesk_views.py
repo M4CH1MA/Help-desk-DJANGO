@@ -13,6 +13,7 @@ def index(request):
 
     context = {
         'page_obj':page_obj,
+        'titulo': 'Consulta de chamado'
     }
     return render(request, 'helpdesk/index.html', context)
 
@@ -31,6 +32,7 @@ def search(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
+        'titulo': 'Consulta de chamado',
         'calls':page_obj,
         'search_value': search_value,
         'page_obj': page_obj,
@@ -41,6 +43,7 @@ def call(request, call_id):
     chamado = get_object_or_404(Call, pk=call_id, show=True)
 
     context = {
+        'titulo': 'Consulta de chamado',
         'calls':chamado,
     }
     return render(request, 'helpdesk/call.html', context)
