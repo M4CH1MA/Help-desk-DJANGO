@@ -6,12 +6,15 @@
         <h4 class="card-title"><b>{{calls.title}}</b></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{calls.category}}</h6>
         <p class="card-text">{{calls.description}}</p>
-        <button type="button" class="btn btn-success">
+        <a type="button" class="btn btn-success text-light">
             <i class="fa-solid fa-check"></i>
-        </button>
-        <button type="button" class="btn btn-info">
+        </a>
+        <a type="button" class="btn btn-info text-light" href="">
             <i class="fa-solid fa-pen-to-square"></i>
-        </button>
+        </a>
+        <a type="button" class="btn btn-danger text-light">
+            <i class="fa-solid fa-trash"></i>
+        </a>
     </div>
 </div>
 {% endblock content %}

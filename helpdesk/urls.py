@@ -8,6 +8,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
 
     path('<int:call_id>/', views.call, name='call'),
+    path('<int:call_id>/update/', views.update, name='update'),
     path('create/', views.create, name='create'),
 
 ]

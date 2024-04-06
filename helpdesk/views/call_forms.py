@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from helpdesk.models import Call
-from django.core.paginator import Paginator
 from django import forms
+from django.urls import reverse
 
 class CallForm(forms.ModelForm):
     
@@ -29,24 +29,60 @@ class CallForm(forms.ModelForm):
 # Create your views here.
 def create(request):
 
-    form = CallForm(request.POST)
+    form_action = reverse('helpdesk:create')
+
+    
 
     if request.method == 'POST':
+        form = CallForm(request.POST)
         context = {
             'titulo': 'Novo Chamado',
             'form': form,
+            'form_action':form_action
         }
 
         if form.is_valid():
-            form.save()
-            return redirect('helpdesk:create')
+            call = form.save()
+            return redirect('helpdesk:update', call_id=call.id)
             
 
         return render(request, 'helpdesk/create.html', context)
 
     context = {
-        'titulo': 'Novo Chamado',
-        'form': CallForm(),
-    }
+            'titulo': 'Novo Chamado',
+            'form': CallForm(),
+            'form_action':form_action,
+        }
 
     return render(request, 'helpdesk/create.html', context)
+
+def update(request, call_id):
+
+    call = get_object_or_404(Call, pk=call_id, show=True)
+
+    form_action = reverse('helpdesk:update', args=(call_id,))
+
+    
+
+    if request.method == 'POST':
+        form = CallForm(request.POST, instance=call)
+        context = {
+            'titulo': 'Editar Chamado',
+            'form': form,
+            'form_action':form_action,
+        }
+
+        if form.is_valid():
+            call = form.save()
+            return redirect('helpdesk:update', call_id=call.id)
+            
+
+        return render(request, 'helpdesk/create.html', context)
+
+    context = {
+            'titulo': 'Novo Chamado',
+            'form': CallForm( instance=call),
+            'form_action':form_action,
+        }
+
+    return render(request, 'helpdesk/index.html', context)
