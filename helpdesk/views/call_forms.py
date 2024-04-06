@@ -12,24 +12,35 @@ class CallForm(forms.ModelForm):
             'class':'form-control'
         })
 
+        self.fields['category'].widget.attrs.update({
+            'class':'form-control'
+        })
+
         self.fields['description'].widget.attrs.update({
             'class':'form-control'
         })
 
     class Meta:
         model = Call
-        fields = 'title', 'description',
+        fields = 'title', 'category', 'description',
         
 
 
 # Create your views here.
 def create(request):
 
+    form = CallForm(request.POST)
+
     if request.method == 'POST':
         context = {
             'titulo': 'Novo Chamado',
-            'form': CallForm(request.POST),
+            'form': form,
         }
+
+        if form.is_valid():
+            form.save()
+            return redirect('helpdesk:create')
+            
 
         return render(request, 'helpdesk/create.html', context)
 
