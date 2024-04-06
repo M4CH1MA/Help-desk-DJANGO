@@ -9,8 +9,6 @@
                     <h5 class="card-title">{{call.title}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{call.category}}</h6>
                     <p class="card-text">{{call.description}}</p>
-                    <a href="{% url 'helpdesk:finalizar' call.id%}" class="btn btn-success"><i class="fa-solid fa-check"></i></a>
-                    <a href="{% url 'helpdesk:call' call.id %}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         {% endfor %}

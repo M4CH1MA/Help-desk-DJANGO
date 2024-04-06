@@ -85,4 +85,22 @@ def update(request, call_id):
             'form_action':form_action,
         }
 
-    return render(request, 'helpdesk/index.html', context)
+    return render(request, 'helpdesk/create.html', context)
+
+
+def delete(request, call_id):
+
+    call = get_object_or_404(Call, pk=call_id, show=True)
+
+    call.delete()
+
+    return redirect('helpdesk:index')
+
+def finalizar(request, call_id):
+
+    call = get_object_or_404(Call, pk=call_id, show=True)
+
+    call.show = False
+    call.save()
+
+    return redirect('helpdesk:index')

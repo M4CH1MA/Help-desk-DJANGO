@@ -3,18 +3,26 @@
 {% block content %}
 <div class="card mb-10 bg-light">
     <div class="card-body">
+        
         <h4 class="card-title"><b>{{calls.title}}</b></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{calls.category}}</h6>
         <p class="card-text">{{calls.description}}</p>
-        <a type="button" class="btn btn-success text-light">
+        
+        <div class="row">
+        <a type="button" class="btn btn-success text-light" href="{% url 'helpdesk:finalizar' calls.id%}">
             <i class="fa-solid fa-check"></i>
         </a>
-        <a type="button" class="btn btn-info text-light" href="">
+        <a type="button" class="btn btn-info text-light" href="{% url 'helpdesk:update' calls.id%}">
             <i class="fa-solid fa-pen-to-square"></i>
         </a>
-        <a type="button" class="btn btn-danger text-light">
-            <i class="fa-solid fa-trash"></i>
-        </a>
+
+        <form action="{% url 'helpdesk:delete' calls.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger text-light">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </form>
+        </div>
     </div>
 </div>
 {% endblock content %}

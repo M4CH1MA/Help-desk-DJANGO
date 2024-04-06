@@ -17,6 +17,20 @@ def index(request):
     }
     return render(request, 'helpdesk/index.html', context)
 
+def finalizado(request):
+    calls = Call.objects.filter(show=False).order_by('-id')
+
+    paginator = Paginator(calls, 3)  
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj':page_obj,
+        'titulo': 'Chamados Finalizados'
+    }
+    return render(request, 'helpdesk/finalizado.html', context)
+
 
 def search(request):
     search_value = request.GET.get('q', '').strip()
