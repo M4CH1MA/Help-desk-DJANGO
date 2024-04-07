@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from helpdesk.models import Call
 from django import forms
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class CallForm(forms.ModelForm):
     
@@ -25,7 +27,6 @@ class CallForm(forms.ModelForm):
         fields = 'title', 'category', 'description',
         
 
-
 # Create your views here.
 def create(request):
 
@@ -46,7 +47,7 @@ def create(request):
             return redirect('helpdesk:update', call_id=call.id)
             
 
-        return render(request, 'helpdesk/create.html', context)
+        #return render(request, 'helpdesk/create.html', context)
 
     context = {
             'titulo': 'Novo Chamado',
@@ -74,10 +75,11 @@ def update(request, call_id):
 
         if form.is_valid():
             call = form.save()
-            return redirect('helpdesk:update', call_id=call.id)
+            #return redirect('helpdesk:update', call_id=call.id)
+            return redirect('helpdesk:index')
             
 
-        return render(request, 'helpdesk/create.html', context)
+        #return render(request, 'helpdesk/create.html', context)
 
     context = {
             'titulo': 'Novo Chamado',
@@ -104,3 +106,45 @@ def finalizar(request, call_id):
     call.save()
 
     return redirect('helpdesk:index')
+
+class RegisterForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['first_name'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['last_name'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['email'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['username'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['password1'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['password2'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        
+
+    class Meta:
+        model = User
+        fields = 'first_name', 'last_name', 'email', 'username', 'password1', 'password2'
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        if User.objects.filter(email=email).exists():
+            self.add_error('email', ValueError('Ja existe esse email', code='invalide') )
+
+        return email
