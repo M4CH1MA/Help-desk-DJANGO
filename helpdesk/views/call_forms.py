@@ -4,6 +4,7 @@ from django import forms
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 
 class CallForm(forms.ModelForm):
     
@@ -134,7 +135,6 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs.update({
             'class':'form-control'
         })
-
         
 
     class Meta:
@@ -148,3 +148,17 @@ class RegisterForm(UserCreationForm):
             self.add_error('email', ValueError('Ja existe esse email', code='invalide') )
 
         return email
+    
+class AutenticacaoForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+        self.fields['password'].widget.attrs.update({
+            'class':'form-control'
+        })
+
+

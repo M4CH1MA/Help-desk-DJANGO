@@ -1,0 +1,11 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <p>Voce ja esta logado, user: {{user.username}}. <a href="{% url 'helpdesk:logout' %}"> Clique aqui</a> para deslogar</p>
+
+{% else %}
+    {% include "helpdesk/partials/_form.html" %}
+{% endif %}
+{% endblock content %}
