@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from . import RegisterForm
+from . import RegisterForm, RegisterUpdateForm
 from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm
 from . import AutenticacaoForm
@@ -40,3 +40,26 @@ def login_view(request):
 def logout_view(request):
     auth.logout(request)
     return redirect('helpdesk:login')
+
+def user_update(request):
+    form = RegisterUpdateForm(instance=request.user)
+
+
+    if request.method != 'POST':
+        return render(
+            request, 'helpdesk/register.html', {'form': form, 'titulo':'Atualizar usuario'}
+        )
+
+    form = RegisterUpdateForm(data=request.POST, instance=request.user)
+
+    if not form.is_valid():
+        return render(
+            request, 'helpdesk/register.html', {'form': form, 'titulo':'Atualizar usuario'}
+        )
+    
+    form.save()
+    return redirect('helpdesk:user_update')
+
+    
+
+    
