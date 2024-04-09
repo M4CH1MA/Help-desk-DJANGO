@@ -3,6 +3,7 @@ from . import RegisterForm, RegisterUpdateForm
 from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm
 from . import AutenticacaoForm
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     form = RegisterForm()
@@ -36,11 +37,12 @@ def login_view(request):
         request, 'helpdesk/login.html', {'form': form, 'titulo':'Acessar sua conta'}
     )
 
-
+@login_required(login_url='helpdesk:login')
 def logout_view(request):
     auth.logout(request)
     return redirect('helpdesk:login')
 
+@login_required(login_url='helpdesk:login')
 def user_update(request):
     form = RegisterUpdateForm(instance=request.user)
 

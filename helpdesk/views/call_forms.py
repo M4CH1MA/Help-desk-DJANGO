@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 
 class CallForm(forms.ModelForm):
     
@@ -31,6 +32,7 @@ class CallForm(forms.ModelForm):
         
 
 # Create your views here.
+@login_required(login_url='helpdesk:login')
 def create(request):
 
     form_action = reverse('helpdesk:create')
@@ -60,6 +62,7 @@ def create(request):
 
     return render(request, 'helpdesk/create.html', context)
 
+@login_required(login_url='helpdesk:login')
 def update(request, call_id):
 
     call = get_object_or_404(Call, pk=call_id, show=True)
@@ -92,7 +95,7 @@ def update(request, call_id):
 
     return render(request, 'helpdesk/create.html', context)
 
-
+@login_required(login_url='helpdesk:login')
 def delete(request, call_id):
 
     call = get_object_or_404(Call, pk=call_id, show=True)
