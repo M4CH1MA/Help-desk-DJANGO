@@ -48,7 +48,9 @@ def create(request):
         }
 
         if form.is_valid():
-            call = form.save()
+            call = form.save(commit=False)
+            call.owner = request.user
+            call.save()
             return redirect('helpdesk:update', call_id=call.id)
             
 
@@ -65,7 +67,7 @@ def create(request):
 @login_required(login_url='helpdesk:login')
 def update(request, call_id):
 
-    call = get_object_or_404(Call, pk=call_id, show=True)
+    call = get_object_or_404(Call, pk=call_id, show=True, owner=request.user)
 
     form_action = reverse('helpdesk:update', args=(call_id,))
 
@@ -98,7 +100,7 @@ def update(request, call_id):
 @login_required(login_url='helpdesk:login')
 def delete(request, call_id):
 
-    call = get_object_or_404(Call, pk=call_id, show=True)
+    call = get_object_or_404(Call, pk=call_id, show=True, owner=request.user)
 
     call.delete()
 
